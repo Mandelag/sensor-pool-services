@@ -17,6 +17,12 @@ import java.util.Set;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.server.Handler;
+
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 
 /**
  *  Runnables that pool data from the sensors to a HashMap of InetSocketAddress and contantly changing measurement strings.
@@ -86,8 +92,6 @@ public class SensorDataReceiver implements Runnable{
             System.out.println("    Usage: java SensorDataReceiver <ip> <receiver_port>");
             return;
         }
-       
-        
         
         Server server = new Server(new InetSocketAddress(InetAddress.getByName(args[0]), 80));
 
@@ -106,7 +110,19 @@ public class SensorDataReceiver implements Runnable{
         ServletHolder sh2 = new ServletHolder(ussServlet);
         context.addServlet(sh2, "/jababeka");
 
-        server.setHandler(context);
+        ContextHandler ch = new ContextHandler();
+        ch.setContextPath("/webapp");
+        
+        ResourceHandler webapp = new ResourceHandler();
+        webapp.setDirectoriesListed(true);
+        webapp.setWelcomeFiles(new String[]{"index.htm"});
+        webapp.setResourceBase("webapp");
+        ch.setHandler(webapp);
+        
+        
+        HandlerList handlers = new HandlerList();
+        handlers.setHandlers(new Handler[]{ch, context, new DefaultHandler()});
+        server.setHandler(handlers);
         t1.start();
         t2.start();
         server.start();

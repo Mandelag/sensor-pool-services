@@ -3,14 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Realtime Heat and Humidity Sensor</title>
+<title>Realtime Temperature and Humidity Sensor</title>
 <style>
-  html, body, #viewDiv {
+  html, body{
     padding: 0;
     margin: 0;
     height: 100%;
     width: 100%;
+    font-family: Calibri;
   }
+  td,th {
+    font-size: 1.1em;
+    font-family: Calibri;
+    padding: 4px;
+    text-align: left;
+  }
+  h3, h4{
+    margin: 0;
+    padding-left: 12px;
+  }
+  #headDiv{
+    margin: 0;
+    padding: 0;
+    height: 8%;
+    width: 100%;
+  }
+  #viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 92%;
+    width: 100%;
+  }
+
 </style>
 <link rel="stylesheet" href="https://js.arcgis.com/4.5/esri/css/main.css">
 <script src="https://js.arcgis.com/4.5/"></script>
@@ -21,7 +45,40 @@
 
 </head>
 <body>
-  <div id="viewDiv"></div>
-  <script src="index.js"></script>
+    <div id="headDiv">
+        <h3>Indoor Temperature and Humidity Monitoring</h3>
+        <h4>Menara 165 6th Floor</h4>
+    </div>
+    
+    
+    <div id="viewDiv">
+        
+    </div>
+    
+    <script src="index.js"></script>
+    <div id="sensordata" style="display:none;border: 1px solid #444; padding: 3px; position: fixed; bottom: 20px; left: 10px; width:400px;height:200px;background-color:#ffffff;box-shadow: 4px 4px 4px rgba(0, 0, 0, .5);">
+        <table style="width:100%;">
+            <tr>
+                <th>Sensor name</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+            </tr>
+            <tr>
+                <td>Gebzepi</td>
+                <td><span id="gebzepi-temperature">44</span> <span> °C </span> <span id="gebzepi-temperature-increment" class="blink_me">&uarr; </span></td>
+                <td><span id="gebzepi-humidity">55</span> <span>%</span> <span id="gebzepi-humidity-increment" class="blink_me">&uarr; </span></td>
+            </tr
+            <tr>
+                <td>Amripi</td>
+                <td><span id="amripi-temperature">44</span> <span> °C </span> <span id="amripi-temperature-increment" class="blink_me">&uarr; </span></td>
+                <td><span id="amripi-humidity">55</span> <span>%</span> <span id="amripi-humidity-increment" class="blink_me">&uarr; </span></td>
+            </tr>
+            <tr>
+                <td>Esripi</td>
+                <td><span id="esripi-temperature">44</span> <span> °C </span> <span id="esripi-temperature-increment" class="blink_me">&uarr; </span></td>
+                <td><span id="esripi-humidity">55</span> <span>%</span> <span id="esripi-humidity-increment" class="blink_me">&uarr; </span></td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>

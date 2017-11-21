@@ -88,23 +88,23 @@ public class SensorDataReceiver implements Runnable{
     }
     
     public static void main(String[] args) throws Exception{
-        if(args.length < 2 ) {
-            System.out.println("    Usage: java SensorDataReceiver <ip> <receiver_port>");
+        if(args.length < 3 ) {
+            System.out.println("    Usage: java SensorDataReceiver <ip> <web_port> <receiver_port>");
             return;
         }
         
-        Server server = new Server(new InetSocketAddress(InetAddress.getByName(args[0]), 80));
+        Server server = new Server(new InetSocketAddress(InetAddress.getByName(args[0]), Integer.parseInt(args[1])));
 
         ServletContextHandler context = new ServletContextHandler();
         context.setContextPath("/");
         
-        SensorDataReceiver thSensor = new SensorDataReceiver(args[0], Integer.parseInt(args[1]));
+        SensorDataReceiver thSensor = new SensorDataReceiver(args[0], Integer.parseInt(args[2]));
         Thread t1 = new Thread(thSensor);
         SensorServlet sensorServlet = new SensorServlet(thSensor);
         ServletHolder servletHolder = new ServletHolder(sensorServlet);
         context.addServlet(servletHolder, "/esriths");
 
-        SensorDataReceiver usSensor = new SensorDataReceiver(args[0], Integer.parseInt(args[1])+1);
+        SensorDataReceiver usSensor = new SensorDataReceiver(args[0], Integer.parseInt(args[2])+1);
         Thread t2 = new Thread(usSensor);
         SensorServlet ussServlet = new SensorServlet(usSensor);
         ServletHolder sh2 = new ServletHolder(ussServlet);

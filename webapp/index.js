@@ -25,7 +25,7 @@ var neoRenderer = sensorRenderer = {
 
 var main = function(Map, MapView, FeatureLayer, Legend){
   var map = new Map({
-    basemap: "satellite"
+    basemap: "osm"
   });
   view = new MapView({
     container: "viewDiv",  // Reference to the scene div created in step 5
